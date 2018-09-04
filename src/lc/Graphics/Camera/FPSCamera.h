@@ -1,28 +1,32 @@
 #pragma once
 
-#include "Camera.h"
+#include <iostream>
 
-namespace lc {
-	namespace graphics {
+#include "camera.h"
+#include "../../Application/input.h"
 
-		class FPSCamera : public Camera
-		{
-		public:
-			FPSCamera(const glm::mat4& projectionMatrix);
-			~FPSCamera();
+namespace lc { namespace graphics {
 
-			void Update();
+	class FPSCamera : public Camera
+	{
+	private:
 
-		private:
+		float m_OffsetX;
+		float m_OffsetY;
 
-			GLfloat m_Speed;
-			GLfloat m_SprinSpeed;
-			GLfloat m_MouseSensitivity;
-			GLfloat m_Yaw;
-			GLfloat m_Pitch;
-			GLboolean m_MouseWasGrabbed;
-		};
-	}
-}
+		float m_Speed;
+		float m_Sensitivity;
+		bool m_MouseWasGrabbed;
+		glm::vec2 m_MousePosition;
+		glm::vec2 m_PreviousMousePosition;
 
+	public:
+		FPSCamera();
+		FPSCamera(glm::mat4 projectionMatrix);
 
+		void update(GLFWwindow* window);
+
+		inline void setMouseSensitivity(const float& sensitivity) { m_Sensitivity = sensitivity; };
+	};
+
+} }

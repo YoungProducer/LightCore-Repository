@@ -17,7 +17,7 @@ typedef uint32	uint;
 
 
 
-namespace sp {
+namespace lc {
 	namespace graphics {
 	}
 }

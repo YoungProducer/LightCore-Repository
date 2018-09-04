@@ -1,56 +1,46 @@
 #pragma once
 
-#ifndef _WINDOW_H_
-#define _WINDOW_H_
-
-#include <iostream>
 #include <string>
 
-#include "Input.h"
+#include "../include/glew.h"
+#include "../include/glfw3.h"
+
+#include <glm\glm.hpp>
+#include <glm\gtc\type_ptr.hpp>
 
 namespace lc {
 
 	class Window
 	{
+	private:
+		int m_Width;
+		int m_Height;
+		int m_PosX;
+		int m_PosY;
+		std::string m_Title;
+
+	private:
+		GLFWwindow* m_Window;
+
 	public:
 		Window();
-		Window(int width, int height, std::string name);
-		virtual ~Window();
+		Window(int width, int height, std::string title);
+		~Window();
 
-		int		CreateNewWindow();
-		void	CenterWindow();
-		void	SetFullScreen();
-		void	Update();
-		bool	Closed();
-		void	UpdateWindowPos();
+		bool createWindow();
+		void init();
+		void clear();
+		void resize();
+		void update();
+		bool closed();
 
-		// Setters
-		inline void					SetWindowPos(glm::vec2 windowPos) { m_WindowPosX = windowPos.x; m_WindowPosY = windowPos.y; };
-		inline void					SetWindowPos(GLint windowPosX, GLint windowPosY) { m_WindowPosX = windowPosX; m_WindowPosY = windowPosY; };
+	public:
+		inline GLFWwindow* getWindow() const { return m_Window; };
 
-		// Getters
-		inline glm::vec2			GetWindowPos() const { return glm::vec2(m_WindowPosX, m_WindowPosY); };
-		inline glm::vec2			GetWindowSize() const { return glm::vec2(m_WindowWidth, m_WindowHeight); };
-		inline GLFWwindow*			GetWindow() const { return m_Window; };
-		inline const GLFWvidmode*	GetVideoMode() const { return m_Mode; };
-		inline GLFWmonitor*			GetMonitor() const { return m_Monitor; };
-	private:
+		inline const glm::vec2 getWindowSize() const { return glm::vec2(m_Width, m_Height); };
+		inline const glm::vec2 gerWindowPosition() const { return glm::vec2(m_PosX, m_PosY); };
 
-		std::string			m_WindowName;
-		GLint				m_WindowPosX;
-		GLint				m_WindowPosY;
-		GLint				m_WindowWidth;
-		GLint				m_WindowHeight;
-		GLboolean			m_FullScreen;
-
-	private:
-		GLFWwindow*			m_Window;
-		const GLFWvidmode*	m_Mode;
-		GLFWmonitor*		m_Monitor;
-
-	private:
-		Input m_Input;
 	};
-}
 
-#endif
+
+}

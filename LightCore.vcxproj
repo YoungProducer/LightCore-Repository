@@ -79,7 +79,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\PC\Documents\Visual Studio 2017\Projects\LightCore\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -91,7 +91,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Users\PC\Documents\Visual Studio 2017\Projects\LightCore\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -107,7 +107,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Users\PC\Documents\Visual Studio 2017\Projects\LightCore\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,33 +123,70 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Users\PC\Documents\Visual Studio 2017\Projects\LightCore\Dependencies\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;OpenGL32.lib;GLU32.lib;glut32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\lc\Application\Input.cpp" />
-    <ClCompile Include="src\lc\Graphics\Camera\FPSCamera.cpp" />
-    <ClCompile Include="src\lc\Graphics\Camera\Camera.cpp" />
-    <ClCompile Include="src\lc\Graphics\Render.cpp" />
-    <ClCompile Include="src\lc\Cursor\Cursor.cpp" />
-    <ClCompile Include="src\lc\Application\Application.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\lc\Scene\Scene.cpp" />
+    <ClCompile Include="src\lc\Application\FPSCounter.cpp" />
+    <ClCompile Include="src\lc\Application\input.cpp" />
     <ClCompile Include="src\lc\Application\Window.cpp" />
+    <ClCompile Include="src\lc\Graphics\buffers\indexBuffer.cpp" />
+    <ClCompile Include="src\lc\Graphics\buffers\vertexArray.cpp" />
+    <ClCompile Include="src\lc\Graphics\buffers\buffer.cpp" />
+    <ClCompile Include="src\lc\Graphics\camera\camera.cpp" />
+    <ClCompile Include="src\lc\Graphics\camera\FPSCamera.cpp" />
+    <ClCompile Include="src\lc\Graphics\camera\TPSCamera.cpp" />
+    <ClCompile Include="src\lc\Graphics\Render\renderer2D.cpp" />
+    <ClCompile Include="src\lc\Graphics\Render\simple2Drenderer.cpp" />
+    <ClCompile Include="src\lc\Graphics\shaders\shader.cpp" />
+    <ClCompile Include="src\lc\Graphics\shaders\shaderFactory.cpp" />
+    <ClCompile Include="src\lc\Graphics\shaders\shaderManager.cpp" />
+    <ClCompile Include="src\lc\maths\AABB.cpp" />
+    <ClCompile Include="src\lc\maths\mat4.cpp" />
+    <ClCompile Include="src\lc\maths\Quaternion.cpp" />
+    <ClCompile Include="src\lc\maths\Rectangle.cpp" />
+    <ClCompile Include="src\lc\maths\vec2.cpp" />
+    <ClCompile Include="src\lc\maths\vec3.cpp" />
+    <ClCompile Include="src\lc\maths\vec4.cpp" />
+    <ClCompile Include="src\lc\Utils\File.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\lc\Application\Input.h" />
-    <ClInclude Include="src\lc\Common.h" />
-    <ClInclude Include="src\lc\Graphics\Camera\Camera.h" />
-    <ClInclude Include="src\lc\Graphics\Camera\FPSCamera.h" />
-    <ClInclude Include="src\lc\Graphics\Render.h" />
-    <ClInclude Include="src\lc\Maths.h" />
-    <ClInclude Include="src\lc\Scene\Scene.h" />
-    <ClInclude Include="src\lc\Cursor\Cursor.h" />
-    <ClInclude Include="src\lc\Application\Application.h" />
-    <ClInclude Include="src\lc.h" />
+    <ClInclude Include="src\lc\Application\FPSCounter.h" />
+    <ClInclude Include="src\lc\Application\input.h" />
     <ClInclude Include="src\lc\Application\Window.h" />
+    <ClInclude Include="src\lc\Common.h" />
+    <ClInclude Include="src\lc.h" />
+    <ClInclude Include="src\lc\Graphics\buffers\indexBuffer.h" />
+    <ClInclude Include="src\lc\Graphics\buffers\vertexArray.h" />
+    <ClInclude Include="src\lc\Graphics\buffers\buffer.h" />
+    <ClInclude Include="src\lc\Graphics\camera\camera.h" />
+    <ClInclude Include="src\lc\Graphics\camera\FPSCamera.h" />
+    <ClInclude Include="src\lc\Graphics\camera\TPSCamera.h" />
+    <ClInclude Include="src\lc\Graphics\Render\renderable2D.h" />
+    <ClInclude Include="src\lc\Graphics\Render\renderer2D.h" />
+    <ClInclude Include="src\lc\Graphics\Render\simple2Drenderer.h" />
+    <ClInclude Include="src\lc\Graphics\shaders\shader.h" />
+    <ClInclude Include="src\lc\Graphics\shaders\shaderFactory.h" />
+    <ClInclude Include="src\lc\Graphics\shaders\shaderManager.h" />
+    <ClInclude Include="src\lc\maths\AABB.h" />
+    <ClInclude Include="src\lc\maths\mat4.h" />
+    <ClInclude Include="src\lc\maths\maths.h" />
+    <ClInclude Include="src\lc\maths\maths_func.h" />
+    <ClInclude Include="src\lc\maths\Quaternion.h" />
+    <ClInclude Include="src\lc\maths\Rectangle.h" />
+    <ClInclude Include="src\lc\maths\tvec2.h" />
+    <ClInclude Include="src\lc\maths\vec2.h" />
+    <ClInclude Include="src\lc\maths\vec3.h" />
+    <ClInclude Include="src\lc\maths\vec4.h" />
     <ClInclude Include="src\lc\Types.h" />
+    <ClInclude Include="src\lc\Utils\File.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\Basic.frag" />
+    <None Include="res\shaders\Basic.vert" />
+    <None Include="res\shaders\Light.frag" />
+    <None Include="res\shaders\Light.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

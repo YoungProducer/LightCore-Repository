@@ -6,25 +6,33 @@ namespace lc {
 
 	InputManager::InputManager()
 	{
-		ClearKeys();
-		ClearMouseButtons();
+		clearKeys();
+		clearMouseButtons();
 
 		Input::s_InputManager = this;
 
 		m_MouseGrabbed = true;
 
-
-	}
-
-	void InputManager::Update()
-	{
-		for (size_t i = 0; i < MAX_BUTTONS; i++)
+		for (int i = 0; i < MAX_BUTTONS; i++)
 		{
-
+			m_MousePreviousStatePress[i] = false;
+			m_MousePreviousStateRelease[i] = false;
 		}
 	}
 
-	void InputManager::SetCallbacks(GLFWwindow* window)
+	void InputManager::update()
+	{
+		for (int i = 0; i < MAX_BUTTONS; i++)
+		{
+			m_MouseClicked[i] = m_MousePressed[i] && !m_MouseReleased[i];
+			m_MouseReleased[i] = false;
+		}
+		m_MousePreviousStatePress[MAX_BUTTONS] = m_MousePressed[MAX_BUTTONS];
+		m_MousePreviousStateRelease[MAX_BUTTONS] = m_MouseReleased[MAX_BUTTONS];
+		m_PreviousPosition = m_MousePosition;
+	}
+
+	void InputManager::setCallbacks(GLFWwindow* window)
 	{
 		glfwSetWindowUserPointer(window, this);
 		glfwSetKeyCallback(window, KeyCallback);
@@ -32,7 +40,7 @@ namespace lc {
 		glfwSetCursorPosCallback(window, CursorPositionCallback);
 	}
 
-	void InputManager::ClearKeys()
+	void InputManager::clearKeys()
 	{
 		for (size_t i = 0; i < MAX_KEYS; i++)
 		{
@@ -41,17 +49,17 @@ namespace lc {
 		}
 	}
 
-	void InputManager::ClearMouseButtons()
+	void InputManager::clearMouseButtons()
 	{
 		for (size_t i = 0; i < MAX_BUTTONS; i++)
 		{
-			m_MouseButtons[i] = false;
-			m_MouseState[i] = false;
 			m_MouseClicked[i] = false;
+			m_MousePressed[i] = false;
+			m_MouseReleased[i] = false;
 		}
 	}
 
-	bool InputManager::IsKeyPressed(int keycode) const
+	bool InputManager::isKeyPressed(int keycode) const
 	{
 		if (keycode >= MAX_KEYS)
 			return false;
@@ -59,15 +67,39 @@ namespace lc {
 		return m_KeyState[keycode];
 	}
 
-	bool InputManager::IsMouseButtonPressed(int button) const
+	bool InputManager::isMouseButtonPressed(int button) const
 	{
 		if (button >= MAX_BUTTONS)
 			return false;
 
-		return m_MouseButtons[button];
+		return m_MousePressed[button];
 	}
 
-	bool InputManager::IsMouseButtonClicked(int button) const
+	bool InputManager::isMouseButtonReleased(int button) const
+	{
+		if (button >= MAX_BUTTONS)
+			return false;
+
+		return m_MouseReleased[button];
+	}
+
+	glm::vec2 const InputManager::getWindowSize(GLFWwindow* window) const
+	{
+		int x, y;
+		glfwGetWindowSize(window, &x, &y);
+
+		return glm::vec2(x, y);
+	}
+
+	glm::vec2 const InputManager::getWindowPosition(GLFWwindow * window) const
+	{
+		int w, h;
+		glfwGetWindowPos(window, &w, &h);
+
+		return glm::vec2(w, h);
+	}
+
+	bool InputManager::isMouseButtonClicked(int button) const
 	{
 		if (button >= MAX_BUTTONS)
 			return false;
@@ -84,7 +116,8 @@ namespace lc {
 	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 	{
 		InputManager* inputManager = (InputManager*)glfwGetWindowUserPointer(window);
-		inputManager->m_MouseButtons[button] = action != GLFW_RELEASE;
+		inputManager->m_MousePressed[button] = action != GLFW_RELEASE;
+		if (action == GLFW_RELEASE) inputManager->m_MouseReleased[button] = true;
 	}
 
 	void CursorPositionCallback(GLFWwindow *window, double xpos, double ypos)

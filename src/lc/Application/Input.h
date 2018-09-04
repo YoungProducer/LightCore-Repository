@@ -1,12 +1,13 @@
 #pragma once
 
-#include <Windows.h>
-#include "../inlcude/glut.h"
-#include "../inlcude/glfw3.h"
+#include <iostream>
 
-#include "../Maths.h"
-#include "../Common.h"
-#include "../Types.h"
+#include <Windows.h>
+#include "../include/glew.h"
+#include "../include/glfw3.h"
+
+#include <glm\glm.hpp>
+#include <glm\gtc\type_ptr.hpp>
 
 namespace lc {
 
@@ -19,33 +20,40 @@ namespace lc {
 		bool m_KeyState[MAX_KEYS];
 		bool m_LastKeyState[MAX_KEYS];
 
-		bool m_MouseButtons[MAX_BUTTONS];
 		bool m_MouseClicked[MAX_BUTTONS];
-		bool m_MouseState[MAX_BUTTONS];
+		bool m_MousePressed[MAX_BUTTONS];
+		bool m_MouseReleased[MAX_BUTTONS];
+		bool m_MousePreviousStatePress[MAX_BUTTONS];
+		bool m_MousePreviousStateRelease[MAX_BUTTONS];
 		bool m_MouseGrabbed;
 
 		glm::vec2 m_MousePosition;
+		glm::vec2 m_PreviousPosition;
 	public:
 		InputManager();
 
-		void Update();
+		void update();
 
-		void SetCallbacks(GLFWwindow* window);
+		void setCallbacks(GLFWwindow* window);
 
-		void ClearKeys();
-		void ClearMouseButtons();
+		void clearKeys();
+		void clearMouseButtons();
 
-		bool IsKeyPressed(int keycode) const;
+		bool isKeyPressed(int keycode) const;
 
-		bool IsMouseButtonPressed(int button) const;
-		bool IsMouseButtonClicked(int button) const;
+		bool isMouseButtonClicked(int button) const;
+		bool isMouseButtonPressed(int button) const;
+		bool isMouseButtonReleased(int button) const;
 
-		void SetMousePistion(const glm::vec2& position) { m_MousePosition = position; };
-		const glm::vec2& GetMousePosition() const { return m_MousePosition; };
+		void setMousePosition(GLFWwindow* window, const glm::vec2& position) { m_MousePosition = position; glfwSetCursorPos(window, (double)position.x, (double)position.y); };
+		const glm::vec2& getMousePosition() const { return m_MousePosition; };
+		const glm::vec2& getPreviousMousePosition() const { return m_PreviousPosition; };
 
-		void SetMouseGrabbed(const bool& isGrabbed) { m_MouseGrabbed = isGrabbed; };
-		const bool& IsMouseFrabbed() const { return m_MouseGrabbed; };
+		void setMouseGrabbed(const bool& isGrabbed) { m_MouseGrabbed = isGrabbed; };
+		const bool& isMouseGrabbed() const { return m_MouseGrabbed; };
 
+		glm::vec2 const getWindowSize(GLFWwindow* window) const;
+		glm::vec2 const getWindowPosition(GLFWwindow* window) const;
 	private:
 		friend static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 		friend static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
@@ -59,14 +67,17 @@ namespace lc {
 		friend class InputManager;
 	public:
 
-		inline static void SetCallbacks(GLFWwindow* window) { return s_InputManager->SetCallbacks(window); };
-		inline static bool IsKeyPressed(int keycode) { return s_InputManager->IsKeyPressed(keycode); };
-		inline static bool IsMouseButtonPressed(int button) { return s_InputManager->IsMouseButtonPressed(button); };
-		inline static bool IsMouseButtonClicked(int button) { return s_InputManager->IsMouseButtonClicked(button); };
+		inline static void setCallbacks(GLFWwindow* window) { return s_InputManager->setCallbacks(window); };
+		inline static bool isKeyPressed(int keycode) { return s_InputManager->isKeyPressed(keycode); };
+		inline static bool isMouseButtonClicked	(int button) { return s_InputManager->isMouseButtonClicked(button); };
+		inline static bool isMouseButtonPressed	(int button) { return s_InputManager->isMouseButtonPressed(button); };
+		inline static bool isMouseButtonReleased(int button) { return s_InputManager->isMouseButtonReleased(button); };
 
-		inline static InputManager* GetInputManager() { return s_InputManager; };
+		inline static InputManager* getInputManager() { return s_InputManager; };
 
-		inline static const glm::vec2& GetMousePosition() { return s_InputManager->GetMousePosition(); };
+		inline static const glm::vec2& getMousePosition() { return s_InputManager->getMousePosition(); };
+		inline static const glm::vec2& getWindowSize(GLFWwindow* window) { return s_InputManager->getWindowSize(window); };
+		inline static const glm::vec2& getWindowPosition(GLFWwindow* window) { return s_InputManager->getWindowPosition(window); };
 	private:
 		static InputManager* s_InputManager;
 
