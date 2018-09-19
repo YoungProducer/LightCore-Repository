@@ -39,6 +39,8 @@ namespace lc {
 		glewInit();
 
 		resize();
+
+		glfwSwapInterval(0);
 	}
 
 	void Window::clear()
@@ -46,9 +48,13 @@ namespace lc {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.0, 0.0, 0.0, 0.0);
 
+		glViewport(0, 0, m_Width, m_Height);
+
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		gluPerspective(65.0f, (float)m_Width / (float)m_Height, 0.1f, 100.0f);
+		//glFrustum(-1.0, 1.0, -1.0, 1.0, 0.01f, 100.0f);
+
+		//gluPerspective(65.0f, (float)m_Width / (float)m_Height, 0.1f, 100.0f);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -56,12 +62,12 @@ namespace lc {
 
 	void Window::resize()
 	{
+		glViewport(0, 0, m_Width, m_Height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
-		gluPerspective(65.0f, (float)m_Width / (float)m_Height, 0.1f, 100.0f);
-		glViewport(0, 0, m_Width, m_Height);
-
+		
+		//glFrustum(-1.0, 1.0, -1.0, 1.0, 0.01f, 100.0f);
+		//gluPerspective(65.0f, (float)m_Width / (float)m_Height, 0.1f, 100.0f);
 		glMatrixMode(GL_MODELVIEW);
 	}
 
@@ -69,7 +75,7 @@ namespace lc {
 	{
 		glfwGetWindowSize(m_Window, &m_Width, &m_Height);
 		glfwGetWindowPos(m_Window, &m_PosX, &m_PosY);
-		resize();
+		//resize();
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}

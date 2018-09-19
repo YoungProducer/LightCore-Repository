@@ -5,7 +5,8 @@
 #include "camera.h"
 #include "../../Application/input.h"
 
-namespace lc { namespace graphics {
+namespace lc { 
+namespace graphics {
 
 	class FPSCamera : public Camera
 	{

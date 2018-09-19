@@ -4,7 +4,7 @@ namespace lc {
 	namespace graphics {
 
 		TPSCamera::TPSCamera(glm::mat4 projectionMatrix)
-			: Camera(projectionMatrix), m_AngleX(90.0f), m_AngleY(45.0f), m_Speed(0.02f), m_Zoom(0.0f), m_Sensitivity(0.2f)
+			: Camera(projectionMatrix), m_AngleX(-90.0f), m_AngleY(45.0f), m_Speed(0.02f), m_Zoom(0.0f), m_Sensitivity(0.2f)
 		{
 			m_PreviousMousePos = Input::getMousePosition();
 
@@ -46,18 +46,19 @@ namespace lc {
 			{
 
 				m_OffsetX = (m_MousePosition.x - m_PreviousMousePos.x) * m_Sensitivity;
+				m_OffsetY = (m_MousePosition.y - m_PreviousMousePos.y) * m_Sensitivity;
 
 				m_Rotation.x += m_OffsetX;
-				m_Rotation.z += m_OffsetX;
+				m_Rotation.y += m_OffsetY;
 
-				m_CameraDir.x = cos(glm::radians(m_Rotation.x + m_OffsetX)) * cos(glm::radians(m_Rotation.y));
-				m_CameraDir.y = -tan(glm::radians(m_Rotation.y));
-				m_CameraDir.z = sin(glm::radians(m_Rotation.z + m_OffsetX)) * cos(glm::radians(m_Rotation.y));
+				m_CameraPos.x = cos(glm::radians(m_Rotation.x + m_OffsetX)) * cos(glm::radians(m_Rotation.y));
+				m_CameraPos.y = sin(glm::radians(m_Rotation.y));
+				m_CameraPos.z = sin(glm::radians(m_Rotation.z + m_OffsetX)) * cos(glm::radians(m_Rotation.y));
 			}
 
 			Input::getInputManager()->update();
 			m_PreviousMousePos = m_MousePosition;
-			m_ViewMatrix = glm::lookAt(m_CameraPos, m_CameraPos + m_CameraDir, m_CameraUp);
+			m_ViewMatrix = glm::lookAt(m_CameraPos, m_CameraDir, m_CameraUp);
 		}
 
 	}

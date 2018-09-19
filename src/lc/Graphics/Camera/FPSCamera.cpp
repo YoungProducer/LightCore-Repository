@@ -1,9 +1,10 @@
 #include "FPSCamera.h"
 
-namespace lc { namespace graphics {
+namespace lc { 
+namespace graphics {
 
 	FPSCamera::FPSCamera()
-		: Camera(glm::mat4(1.0f)), m_Speed(0.2f), m_Sensitivity(0.003f), m_MouseWasGrabbed(false)
+		: Camera(glm::mat4(1.0f)), m_Speed(0.002f), m_Sensitivity(0.003f), m_MouseWasGrabbed(false)
 	{
 		m_PreviousMousePosition = Input::getMousePosition();
 
@@ -14,7 +15,7 @@ namespace lc { namespace graphics {
 	}
 
 	FPSCamera::FPSCamera(glm::mat4 projectionMatrix)
-		: Camera(projectionMatrix), m_Speed(0.2f), m_Sensitivity(0.003f), m_MouseWasGrabbed(false)
+		: Camera(projectionMatrix), m_Speed(0.02f), m_Sensitivity(0.05f), m_MouseWasGrabbed(false)
 	{
 		m_PreviousMousePosition = Input::getMousePosition();
 
@@ -60,12 +61,9 @@ namespace lc { namespace graphics {
 
 			if (Input::getInputManager()->isMouseGrabbed())
 			{
-				m_MousePosition.x -= windowCenter.x;
-				m_MousePosition.y -= windowCenter.y;
-
-				m_OffsetX = m_MousePosition.x * m_Sensitivity;
-				m_OffsetY = m_MousePosition.y * m_Sensitivity;
-				//Input::getInputManager()->setMousePosition(window, windowCenter);
+				m_OffsetX = (m_MousePosition.x - m_PreviousMousePosition.x) * m_Sensitivity;
+				m_OffsetY = (m_MousePosition.y - m_PreviousMousePosition.y) * m_Sensitivity;
+				Input::getInputManager()->setMousePosition(window, windowCenter);
 
 				m_Rotation.x += m_OffsetX;
 				m_Rotation.y += m_OffsetY;
@@ -85,6 +83,7 @@ namespace lc { namespace graphics {
 		}
 
 		Input::getInputManager()->update();
+		m_PreviousMousePosition = m_MousePosition;
 		m_ViewMatrix = glm::lookAt(m_CameraPos, m_CameraPos + m_CameraDir, m_CameraUp);
 	}
 
